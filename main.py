@@ -20,7 +20,7 @@ if platform in ['linux', 'linux2']:
 		asyncio.set_event_loop(uvloop.EventLoopPolicy())
 warnings.filterwarnings('ignore')
 
-BOT_TOKEN = '5445549645:AAH0xgdPpC8aah5sPDYYnSGBkzjVtyMahWU'
+BOT_TOKEN = 'YOUR TOKEN'
 
 class Database:
 
@@ -92,7 +92,7 @@ class Database:
 	# Registration
 
 	async def admin_add_mobs(self, mob_data:dict) -> None:
-		self.connection.execute(self.mobs.insert().values([data]))
+		self.connection.execute(self.mobs.insert().values([mob_data]))
 
 	async def admin_add_location(self, data:dict) -> None:
 		self.connection.execute(self.location.insert().values([data]))
@@ -290,7 +290,7 @@ class Database:
 			))
 		return data
 
-	async def get_items_potion(selft) -> tuple:
+	async def get_items_potion(self) -> tuple:
 		data = self.connection.execute(db.select([self.items]).where(self.items.columns.ItemType == 6)).fetchall()
 		if data != []:
 			return list(map(
@@ -344,7 +344,7 @@ class Database:
 		all_player = self.connection.execute(db.select([self.gamer])).fetchall()
 		await self._save_file('players.txt', [f'ID: {gamer["uuid"]}\nNick: {gamer["nickname"]}\nHp - CurHP: {gamer["hp"]} - {gamer["curhp"]}\nMoney: {gamer["money"]}\nAttack: {gamer["attack"]}\nArmour - MagicArmour: {gamer["armour"]} - {gamer["magicarmour"]}\nLocation: {gamer["location"]}\n\n' for gamer in all_player])
 		all_mobs = self.connection.execute(db.select([self.mobs])).fetchall()
-		await self._save_file('mobs.txt', [f'ID: {uuid}\nHP: {hp}\nReqXP: {mob["reqxp"]}\nAttack Type - attack: {mob["attacktype"]} - {mob["attack"]}\nArmour - Magic Armour: {mob["armour"]} - {mob["magicarmour"]}\n\n' for mob in all_mobs])
+		await self._save_file('mobs.txt', [f'ID: {mob["uuid"]}\nHP: {mob["hp"]}\nReqXP: {mob["reqxp"]}\nAttack Type - attack: {mob["attacktype"]} - {mob["attack"]}\nArmour - Magic Armour: {mob["armour"]} - {mob["magicarmour"]}\n\n' for mob in all_mobs])
 		all_locations = self.connection.execute(db.select([self.location])).fetchall()
 		await self._save_file('locations.txt', [f'ID: {location["uuid"]}\nX - Y: {location["xcoord"]} - {location["ycoord"]}\nLocation type: {location["type_of_location"]}\n\n' for location in all_locations])
 		all_items = [await coro() for coro in [self.get_items_weapons, self.get_items_armour, self.get_items_helmet, self.get_items_boots, self.get_items_braces, self.get_items_potion]]

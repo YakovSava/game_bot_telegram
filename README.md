@@ -1,0 +1,2 @@
+## What is it?
+This... Telegram game bot with *SQLAlchemy* database. A freelance customer for some reason asked me to make the game in the same way in *Jupiter Notebook* format, so I wrote it... In *Google.coollaboratory*, although of course I tested it on *.py* because the computer is not so strong for installing some powerful programs to run *.ipynb* immediately
